@@ -51,7 +51,6 @@ def show_melon(melon_id):
     """
 
     melon = melons.get_by_id(melon_id)
-    print melon
     return render_template("melon_details.html",
                            display_melon=melon)
 
@@ -63,8 +62,18 @@ def show_shopping_cart():
     #     session[melon_id] = session.get(melon_id, 0)
     #     session[melon_id].append()
 
+    melon_objects = []
+    total_cost = 0
 
+    cart = session["cart"]
 
+    for melon_id in cart:
+        melon_object = melons.get_by_id(melon_id)
+        melon_object.quantity = cart["melon_id"]
+        melon_total = melon_object.quantity * melon_object.price
+        melon_object.total = melon_total
+        total_cost += melon_total
+        melon_objects.append(melon_object)
 
 
     # TODO: Display the contents of the shopping cart.
